@@ -26,7 +26,7 @@ let () =
       ("-p", Arg.Set_int port, "target port");
     ]
     (fun arg -> Printf.printf "Argument %s not recognised\n" arg; exit 1)
-    (Sys.executable_name ^ " -h <host -p <port>");
+    (Sys.executable_name ^ " -h <host> -p <port>");
   match !host with
   | None -> Printf.printf "No host specified\n"; exit 1
   | Some host -> watch host !port
