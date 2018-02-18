@@ -2,14 +2,14 @@ let default_port = 50000
 
 let watch host port =
   let addr = Unix.ADDR_INET (Unix.inet_addr_of_string host, port) in
-  let buffer = String.create 1024 in
+  let buffer = Bytes.create 1024 in
   let socket = Unix.socket Unix.PF_INET Unix.SOCK_STREAM 0 in
   Unix.connect socket addr;
   let rec watch' socket buffer =
     try
       let chars_received = Unix.recv socket buffer 0 1024 [] in
-      let result = String.sub buffer 0 chars_received in
-      Printf.printf "%s%!" result;
+      let result = Bytes.sub buffer 0 chars_received in
+      Printf.printf "%s%!" (Bytes.to_string result);
       watch' socket buffer
     with e ->
       Printf.printf ("%s was raised - shutting down\n%!") (Printexc.to_string e);
